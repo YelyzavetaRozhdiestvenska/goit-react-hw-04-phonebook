@@ -1,10 +1,14 @@
 import React from 'react';
 
-export const Filter = ({ filterContact }) => {
+export const Filter = ({ filter, filterContact }) => {
   return (
     <>
       <p>Find contacts by name</p>
-      <input type="text" name="name" onChange={filterContact}></input>
+      <input value={filter}
+        onChange={filterContact}
+        placeholder="Search..."
+        type="text"
+        name="filter"></input>
     </>
   );
 };

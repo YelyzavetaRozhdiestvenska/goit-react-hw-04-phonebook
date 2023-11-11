@@ -2,6 +2,7 @@ import React from 'react';
 import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { StyledForm, StyledLabel, StyledButton } from './contactForm.styled';
+import { nanoid } from 'nanoid';
 
 const phoneRegExp =
   /^\+?\d{1,4}?[ .-]?(\(\d{1,3}\))?([ .-]?\d{1,4}){1,4}([ .-]?\d{1,9})?$/;
@@ -10,10 +11,12 @@ const schema = Yup.object().shape({
     .min(2, 'Too Short!')
     .max(50, 'Too Long!')
     .required('Required'),
-  number: Yup.string().matches(phoneRegExp).required('Required'),
+  number: Yup.string().matches(phoneRegExp, 'Number(xxx-xx-xx)!').min(9, 'Too Short!').required('Required'),
 });
 
 export function ContactForm({ addContact }) {
+  
+
   return (
     <>
       <Formik
@@ -23,7 +26,7 @@ export function ContactForm({ addContact }) {
         }}
         validationSchema={schema}
         onSubmit={(values, actions) => {
-          addContact(values);
+          addContact({...values, id: nanoid()});
           actions.resetForm();
         }}
       >

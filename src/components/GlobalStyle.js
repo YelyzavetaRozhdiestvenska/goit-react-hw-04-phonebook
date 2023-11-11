@@ -53,6 +53,15 @@ button:hover {
   box-shadow: none;
   position: relative;
   top: 5px;
+  cursor: pointer;
+}
+
+button:active {
+  background: #003CC5;
+  box-shadow: none;
+  position: relative;
+  top: 5px;
+  scale: 0.9;
 }
 `;
 

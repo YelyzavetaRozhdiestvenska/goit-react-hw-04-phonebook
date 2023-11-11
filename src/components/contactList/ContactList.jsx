@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyledList, ContactItem, DeletButton } from './contactList.styled';
 
-export const ContactList = ({ handleDelete, contacts, filter }) => {
+export const ContactList = ({ getVisibleContact, handleDelete }) => {
   return (
     <StyledList>
-      {contacts.map(contact => (
-        <ContactItem key={contact.id}>
+      {getVisibleContact.map(contact => (
+        <ContactItem key={contact.id}> 
           {contact.name}: {contact.number}{' '}
           <DeletButton onClick={() => handleDelete(contact.id)}>
             Delete
