@@ -4,7 +4,7 @@ import { ContactForm } from './contactForm/ContactForm';
 import { ContactList } from './contactList/ContactList';
 import { Filter } from './filter/Filter';
 import { Phonebook } from './App.styled';
-
+// hoocs
 export class App extends Component {
   state = {
     contacts: [
@@ -14,7 +14,6 @@ export class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-    
   };
 
   componentDidMount() {
@@ -33,21 +32,19 @@ export class App extends Component {
     }
   }
 
-  addContact = (newContact) => {
-              
+  addContact = newContact => {
     if (this.state.contacts.find(contact => contact.name === newContact.name)) {
       return alert(`${newContact.name} is already in contacts`);
     }
-    this.setState(prevState => ({ contacts: [...prevState.contacts, newContact] }));
+    this.setState(prevState => ({
+      contacts: [...prevState.contacts, newContact],
+    }));
   };
-
-
 
   getContact = e => {
     const searchQuerry = e.currentTarget.value;
-    this.setState({filter: searchQuerry});
+    this.setState({ filter: searchQuerry });
   };
-
 
   handleDeleteContact = contactId => {
     this.setState(prevState => ({
@@ -55,17 +52,17 @@ export class App extends Component {
     }));
   };
 
-  
-  
   render() {
-    const {contacts, filter} = this.state;
-    const getVisibleContact = contacts.filter(({ name }) => name.toLowerCase().includes(filter.toLocaleLowerCase()));
+    const { contacts, filter } = this.state;
+    const getVisibleContact = contacts.filter(({ name }) =>
+      name.toLowerCase().includes(filter.toLocaleLowerCase())
+    );
     return (
       <Phonebook>
         <h1>Phonebook</h1>
         <ContactForm addContact={this.addContact}></ContactForm>
         <h2>Contacts</h2>
-        <Filter filter={ filter } filterContact={this.getContact} />
+        <Filter filter={filter} filterContact={this.getContact} />
         <ContactList
           handleDelete={this.handleDeleteContact}
           getVisibleContact={getVisibleContact}
