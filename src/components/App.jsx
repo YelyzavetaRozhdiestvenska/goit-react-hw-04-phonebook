@@ -7,6 +7,7 @@ import { Phonebook } from './App.styled';
 
 export const App = () => {
   const [contacts, setContacts] = useState(() => {
+    //   Заменяет componentDidMount
     const savedContacts = localStorage.getItem('contacts');
     console.log(savedContacts);
     if (savedContacts !== null) {
@@ -14,9 +15,10 @@ export const App = () => {
     }
     return [];
   });
+
   const [filter, setFilter] = useState('');
 
-  // Запись contacts в localeStorage
+  // Запись contacts в localeStorage , заменяет componentDidUpdate
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
@@ -30,7 +32,7 @@ export const App = () => {
 
   const getContact = e => {
     const searchQuerry = e.currentTarget.value;
-    setFilter({ filter: searchQuerry });
+    setFilter(searchQuerry);
   };
 
   const handleDeleteContact = contactId => {
@@ -38,9 +40,15 @@ export const App = () => {
       prevState.filter(contact => contact.id !== contactId)
     );
   };
-  const getVisibleContact = contacts.filter(({ name }) =>
-    name.toLowerCase().includes(filter.toLocaleLowerCase())
-  );
+
+  const getVisibleContact = () => {
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  };
+
+  const visibleContact = getVisibleContact();
+
   return (
     <Phonebook>
       <h1>Phonebook</h1>
@@ -49,7 +57,7 @@ export const App = () => {
       <Filter filter={filter} filterContact={getContact} />
       <ContactList
         handleDelete={handleDeleteContact}
-        getVisibleContact={getVisibleContact}
+        getVisibleContact={visibleContact}
       />
       <GlobalStyle />
     </Phonebook>
